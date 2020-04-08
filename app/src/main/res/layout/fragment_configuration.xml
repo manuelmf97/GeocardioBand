@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+    <TextView
+        android:id="@+id/title_configuration_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Configuracion Inicial"
+        android:textSize="32dp"
+        android:textAlignment="center"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold"/>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <TableRow android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/age_configuration_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edad: "
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/age_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Introduzca edad aqui"
+                android:textSize="15dp" />
+        </TableRow>
+
+        <TableRow android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/chloresterol_configuration_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Colesterol (mg/dL): "
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/cholesterol_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Introduzca el colesterol"
+                android:textSize="15dp" />
+        </TableRow>
+
+        <TableRow android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/bmi_configuration_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="IMC*: "
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/bmi_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Introduzca el IMC"
+                android:textSize="15dp" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/sex_configuration_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Sexo: "
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/sex_options"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="4dp"
+                    android:checked="true"
+                    android:text="Masculino"
+                    android:textSize="10dp" />
+
+                <RadioButton
+                    android:id="@+id/radio_female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="Femenino"
+                    android:textSize="10dp" />
+            </RadioGroup>
+        </TableRow>
+
+        <TableRow android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/smoker_configuration_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="¿Fuma? "
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/smoker_options"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_yes_smoker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:checked="false"
+                    android:text="Si" />
+
+                <RadioButton
+                    android:id="@+id/radio_no_smoker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="No" />
+            </RadioGroup>
+
+        </TableRow>
+
+        <TableRow android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/hypertension_configuration_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="¿Sufre hipertension?"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/hypertension_options"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_yes_hypertension"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:checked="false"
+                    android:text="Si" />
+
+                <RadioButton
+                    android:id="@+id/radio_no_hypertension"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="No" />
+            </RadioGroup>
+        </TableRow>
+
+        <TableRow android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/chd_configuration_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="¿Infarto ultimos 10 años?"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/chd_options"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_yes_chd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:checked="false"
+                    android:text="Si" />
+
+                <RadioButton
+                    android:id="@+id/radio_no_chd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="No" />
+            </RadioGroup>
+        </TableRow>
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/aclaration_imc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="*Indice Masa Corporal (IMC)"
+        android:textSize="15dp"
+        android:textStyle="italic"/>
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:text="Guardar Configuracion"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/colorPrimary"
+        android:textColor="#FFFFFF"/>
+
+</LinearLayout>
