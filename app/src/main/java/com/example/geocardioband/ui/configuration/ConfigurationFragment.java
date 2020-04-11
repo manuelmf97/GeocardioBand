@@ -2,6 +2,7 @@ package com.example.geocardioband.ui.configuration;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,16 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.room.Room;
+
 import com.example.geocardioband.R;
+import com.example.geocardioband.ui.room.AppDatabase;
+import com.example.geocardioband.ui.room.UserConfigDao;
 
 
 public class ConfigurationFragment extends Fragment {
+
+    AppDatabase db;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -34,6 +41,23 @@ public class ConfigurationFragment extends Fragment {
         final RadioGroup smokerRG = (RadioGroup) root.findViewById(R.id.smoker_options);
         final RadioGroup hypertensionRG = (RadioGroup) root.findViewById(R.id.hypertension_options);
         final RadioGroup chdRG = (RadioGroup) root.findViewById(R.id.chd_options);
+
+        // Instanciar DB
+        db = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "geocardioband").allowMainThreadQueries().build();
+
+        // Si existen datos en la BD, leerlos y fijarlos. Siempre se guarda y obtiene con ID=0, sólo hay una configuración.
+        UserConfig userConfig = db.UserConfigDao().getUserConfig(0);
+        if (userConfig!=null && userConfig.getMid()==0){
+            // Fijar en el layout la configuración ya existente.
+            age.setText(userConfig.getAge());
+            cholesterol.setText(userConfig.getCholesterol());
+            bmi.setText(userConfig.getBmi());
+            sexRG.check(userConfig.getAge().equals("Masculino") ? R.id.radio_male : R.id.radio_female);
+            smokerRG.check(userConfig.getSmoker() ? R.id.radio_yes_smoker : R.id.radio_no_smoker);
+            hypertensionRG.check(userConfig.getHypertension() ? R.id.radio_yes_hypertension : R.id.radio_no_hypertension);
+        }
+
+        // TODO CHD no debe pedirse al usuario ni almacenar en la config, es lo que se quiere predecir.
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
@@ -64,6 +88,10 @@ public class ConfigurationFragment extends Fragment {
                     Boolean hypertension = (hypertensionText.equals("Si")) ? true : false;
                     String chdText = chdRadioButton.getText().toString();
                     Boolean chd = (chdText.equals("Si")) ? true : false;
+
+                    // Guardar datos en la BD
+                    UserConfig NewUserConfig = new UserConfig(0,ageText,cholesterolText,bmiText,sexText,smoker,hypertension);
+                    db.UserConfigDao().addUserConfig(NewUserConfig);
 
                     Toast.makeText(context, "Configuracion guardada con éxito", duration).show();
                 }

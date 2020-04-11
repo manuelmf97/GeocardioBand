@@ -1,16 +1,33 @@
 package com.example.geocardioband.ui.historical;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Prediction {
-    private int probability;
+    @PrimaryKey (autoGenerate = true)
+    @NonNull
+    private int mid;
+    @ColumnInfo(name = "probability")
+    private double probability;
+    @ColumnInfo(name = "date")
     private String date;
 
-    public Prediction(int _probability, String _date){
-        this.probability = _probability;
-        this.date = _date;
-
+    public Prediction(double probability, String date) {
+        this.probability = probability;
+        this.date = date;
+    }
+    @Ignore
+    public Prediction(int mid, double probability, String date) {
+        this.mid = mid;
+        this.probability = probability;
+        this.date = date;
     }
 
-    public int getProbability(){
+    public double getProbability(){
         return this.probability;
     }
 
@@ -19,7 +36,7 @@ public class Prediction {
     }
 
 
-    public void setProbability(int _probability ){
+    public void setProbability(double _probability ){
         this.probability = _probability;
     }
 
@@ -27,4 +44,11 @@ public class Prediction {
         this.date = _date;
     }
 
+    public int getMid() {
+        return mid;
+    }
+
+    public void setMid(int mid) {
+        this.mid = mid;
+    }
 }

@@ -5,17 +5,21 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.geocardioband.R;
+import com.example.geocardioband.ui.room.AppDatabase;
 
 import java.util.ArrayList;
 
 
 public class PredictionListFragment extends Fragment {
+
+    private AppDatabase db;
 
     RecyclerView recyclerPredictions;
     ArrayList<Prediction> predictionList;
@@ -35,21 +39,9 @@ public class PredictionListFragment extends Fragment {
     }
 
     public void setData(){
-        predictionList.add(new Prediction(88,"03/03/1997 18:04"));
-        predictionList.add(new Prediction(18,"04/04/1998 18:24"));
-        predictionList.add(new Prediction(28,"05/04/1998 18:24"));
-        predictionList.add(new Prediction(45,"06/04/1998 18:24"));
-        predictionList.add(new Prediction(67,"08/04/1998 18:24"));
-        predictionList.add(new Prediction(87,"09/04/1998 18:24"));
-        predictionList.add(new Prediction(89,"14/04/1998 18:24"));
-        predictionList.add(new Prediction(38,"24/04/1998 18:24"));
-        predictionList.add(new Prediction(88,"03/03/1997 18:04"));
-        predictionList.add(new Prediction(18,"04/04/1998 18:24"));
-        predictionList.add(new Prediction(28,"05/04/1998 18:24"));
-        predictionList.add(new Prediction(45,"06/04/1998 18:24"));
-        predictionList.add(new Prediction(67,"08/04/1998 18:24"));
-        predictionList.add(new Prediction(87,"09/04/1998 18:24"));
-        predictionList.add(new Prediction(89,"14/04/1998 18:24"));
-        predictionList.add(new Prediction(38,"24/04/1998 18:24"));
+        // Instanciar DB
+        db = Room.databaseBuilder(this.getContext(), AppDatabase.class, "geocardioband").allowMainThreadQueries().build();
+        // Recuperar las predicciones de la DB
+        predictionList.addAll(db.PredictionDao().getAll());
     }
 }
