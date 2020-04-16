@@ -34,7 +34,7 @@ public class PredictionFragment extends Fragment implements Callback<PredictResp
 
     private AppDatabase db;
     private TextView predictionTextView;    // Declarada aquí para que la actualice el onResponse tras la peticion
-
+    private UserConfig userConfig;          //Declarada aqui para no tener que leerla tras volver del pop up
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -51,7 +51,7 @@ public class PredictionFragment extends Fragment implements Callback<PredictResp
        predictionButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Recuperar configuracion
-                UserConfig userConfig = db.UserConfigDao().getUserConfig(0);
+                userConfig = db.UserConfigDao().getUserConfig(0);
                 if (userConfig!=null && userConfig.getMid()==0){
                     heartRatePopUp popUpClass = new heartRatePopUp();
                     //necesitamos mandar el fragment al pop up para que este pueda retornar el ritmo cardiaco
@@ -77,7 +77,7 @@ public class PredictionFragment extends Fragment implements Callback<PredictResp
      * Crea el body (json) y realiza la petición a la API
      */
     public void makeRequest(Double heartRate){
-        UserConfig userConfig = db.UserConfigDao().getUserConfig(0);
+        userConfig = db.UserConfigDao().getUserConfig(0);
         // Crear el body de la peticion
         PredictRequest predictRequestBody = new PredictRequest(
                 userConfig.getSex().equals("Masculino") ? 1 : 0,
