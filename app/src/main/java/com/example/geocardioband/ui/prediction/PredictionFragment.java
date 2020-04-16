@@ -50,9 +50,15 @@ public class PredictionFragment extends Fragment implements Callback<PredictResp
        //boton que lanza el pop up para introducir el ritmo cardiaco
        predictionButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                heartRatePopUp popUpClass = new heartRatePopUp();
-                //necesitamos mandar el fragment al pop up para que este pueda retornar el ritmo cardiaco
-                popUpClass.showPopupWindow(v, PredictionFragment.this);
+                // Recuperar configuracion
+                UserConfig userConfig = db.UserConfigDao().getUserConfig(0);
+                if (userConfig!=null && userConfig.getMid()==0){
+                    heartRatePopUp popUpClass = new heartRatePopUp();
+                    //necesitamos mandar el fragment al pop up para que este pueda retornar el ritmo cardiaco
+                    popUpClass.showPopupWindow(v, PredictionFragment.this);
+                } else {
+                    Toast.makeText(context, "Configura tus parámetros primero", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -63,33 +69,28 @@ public class PredictionFragment extends Fragment implements Callback<PredictResp
     //listener que recibe la informacion de ritmo cardiaco del pop up
     public void sendHeartRate(String heartRate) {
         //Llamada al builder de peticion
-        makeRequest(this.getContext(), Double.valueOf(heartRate));
+        makeRequest(Double.valueOf(heartRate));
+
     }
 
     /**
      * Crea el body (json) y realiza la petición a la API
      */
-    public void makeRequest(Context context, Double heartRate){
-        // Recuperar configuracion
+    public void makeRequest(Double heartRate){
         UserConfig userConfig = db.UserConfigDao().getUserConfig(0);
-        if (userConfig!=null && userConfig.getMid()==0){
-            // Crear el body de la peticion
-            PredictRequest predictRequestBody = new PredictRequest(
-                    userConfig.getSex().equals("Masculino") ? 1 : 0,
-                    Integer.parseInt(userConfig.getAge()),
-                    userConfig.getSmoker() ? 1 : 0,
-                    userConfig.getHypertension() ? 1 : 0,
-                    Double.valueOf(userConfig.getCholesterol()),
-                    Double.valueOf(userConfig.getBmi()),
-                    heartRate);
+        // Crear el body de la peticion
+        PredictRequest predictRequestBody = new PredictRequest(
+                userConfig.getSex().equals("Masculino") ? 1 : 0,
+                Integer.parseInt(userConfig.getAge()),
+                userConfig.getSmoker() ? 1 : 0,
+                userConfig.getHypertension() ? 1 : 0,
+                Double.valueOf(userConfig.getCholesterol()),
+                Double.valueOf(userConfig.getBmi()),
+                heartRate);
 
             // Realizar peticion a la API
-            Call<PredictResponse> call = PredictionApiAdapter.getApiService().postPredict(predictRequestBody);
-            call.enqueue(this); // Si tiene exito, ejecuta onResponse, si no, onFailure.
-
-        } else {
-            Toast.makeText(context, "Configura tus parámetros primero", Toast.LENGTH_SHORT).show();
-        }
+        Call<PredictResponse> call = PredictionApiAdapter.getApiService().postPredict(predictRequestBody);
+        call.enqueue(this); // Si tiene exito, ejecuta onResponse, si no, onFailure.
     }
 
     @Override
