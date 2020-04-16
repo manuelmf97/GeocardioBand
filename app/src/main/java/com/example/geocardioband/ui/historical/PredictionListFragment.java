@@ -27,10 +27,10 @@ public class PredictionListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        //muestra de la vista del historico de preddicciones
         View root = inflater.inflate(R.layout.fragment_historical, container, false);
-        predictionList = new ArrayList<>();
-        recyclerPredictions = root.findViewById(R.id.idReciclerView);
+        predictionList = new ArrayList<>();//lista de predicciones
+        recyclerPredictions = root.findViewById(R.id.idReciclerView);//reciclerView de predicciones
         recyclerPredictions.setLayoutManager(new LinearLayoutManager(getContext()));
         setData();
         PredictionAdapter adapter = new PredictionAdapter(predictionList);

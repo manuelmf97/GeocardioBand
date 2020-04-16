@@ -20,13 +20,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //muestra de la vista de la actividad principal que se encarga de cargar el fragment por defecto
         setContentView(R.layout.activity_main);
+        //barra de tareas
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //barra laterar izquierda para navegar por los fragments
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
+        //indicar que fragments vamos a usar
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_prediction, R.id.nav_configuration, R.id.nav_historical)
                 .setDrawerLayout(drawer)

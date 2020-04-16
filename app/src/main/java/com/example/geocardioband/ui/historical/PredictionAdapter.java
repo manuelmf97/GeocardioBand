@@ -14,9 +14,10 @@ import com.example.geocardioband.R;
 
 import java.util.ArrayList;
 
+//Adaptador para listar el historico de prediciones
 public class PredictionAdapter extends RecyclerView.Adapter<PredictionAdapter.PredictionViewHolder>{
 
-    ArrayList<Prediction> predictionList;
+    ArrayList<Prediction> predictionList; //conjunto de predicciones hechas por el usuario
 
     public PredictionAdapter(ArrayList<Prediction> _predictionList) {
         this.predictionList=_predictionList;
@@ -24,6 +25,7 @@ public class PredictionAdapter extends RecyclerView.Adapter<PredictionAdapter.Pr
 
     @Override
     public PredictionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        //muestra de la vista de una prediccion
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_historical,null,false);
         return new PredictionViewHolder(view);
     }
@@ -31,6 +33,7 @@ public class PredictionAdapter extends RecyclerView.Adapter<PredictionAdapter.Pr
     @SuppressLint("ResourceType")
     @Override
     public void onBindViewHolder(PredictionViewHolder holder, int position) {
+        //introducir los campos con la informacion de cada una de las predicciones
         holder.txtDate.setText("Fecha: "+ predictionList.get(position).getDate());
         holder.txtPrediction.setText("Prediccion: "+String.valueOf(predictionList.get(position).getProbability())+ "%");
         holder.image.setImageResource(R.drawable.heart);

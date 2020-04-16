@@ -27,12 +27,14 @@ public class ConfigurationFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
+        //Vista del fragment
         final View root = inflater.inflate(R.layout.fragment_configuration, container, false);
 
         final Context context = this.getContext();
         final CharSequence text = "Por favor, introduzca todos los campos";
         final int duration = Toast.LENGTH_SHORT;
+
+        //Obtencion de los manejadores de la informacion del usuario
         final Button saveButton = (Button)root.findViewById(R.id.save_button);
         final EditText age = (EditText) root.findViewById(R.id.age_editText);
         final EditText cholesterol = (EditText) root.findViewById(R.id.cholesterol_editText);
@@ -40,7 +42,6 @@ public class ConfigurationFragment extends Fragment {
         final RadioGroup sexRG = (RadioGroup) root.findViewById(R.id.sex_options);
         final RadioGroup smokerRG = (RadioGroup) root.findViewById(R.id.smoker_options);
         final RadioGroup hypertensionRG = (RadioGroup) root.findViewById(R.id.hypertension_options);
-        final RadioGroup chdRG = (RadioGroup) root.findViewById(R.id.chd_options);
 
         // Instanciar DB
         db = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "geocardioband").allowMainThreadQueries().build();
@@ -57,37 +58,33 @@ public class ConfigurationFragment extends Fragment {
             hypertensionRG.check(userConfig.getHypertension() ? R.id.radio_yes_hypertension : R.id.radio_no_hypertension);
         }
 
-        // TODO CHD no debe pedirse al usuario ni almacenar en la config, es lo que se quiere predecir.
-
         saveButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
+                //comprobar si los campos estan blancos e indicarselo al usuario
                 if(isEmpty(age) || isEmpty(cholesterol) || isEmpty(bmi)){
 
                     Toast.makeText(context, text, duration).show();
 
                 }else{
-
+                    //Obtencion de la informacion de configuracion del usuario
                     String ageText = age.getText().toString();
                     String cholesterolText = cholesterol.getText().toString();
                     String bmiText = bmi.getText().toString();
                     int radioIdSex = sexRG.getCheckedRadioButtonId();
                     int radioIdSmoker = smokerRG.getCheckedRadioButtonId();
                     int radioIdHypertension = hypertensionRG.getCheckedRadioButtonId();
-                    int radioIdChd = chdRG.getCheckedRadioButtonId();
 
                     RadioButton sexRadioButton = (RadioButton) root.findViewById(radioIdSex);
                     RadioButton smokerRadioButton = (RadioButton) root.findViewById(radioIdSmoker);
                     RadioButton hypertensionRadioButton = (RadioButton) root.findViewById(radioIdHypertension);
-                    RadioButton chdRadioButton = (RadioButton) root.findViewById(radioIdChd);
 
+                    //Pasar a String la configuracion botones de radio de la vista
                     String sexText = sexRadioButton.getText().toString();
                     String smokerText = smokerRadioButton.getText().toString();
                     Boolean smoker = (smokerText.equals("Si")) ? true : false;
                     String hypertensionText = hypertensionRadioButton.getText().toString();
                     Boolean hypertension = (hypertensionText.equals("Si")) ? true : false;
-                    String chdText = chdRadioButton.getText().toString();
-                    Boolean chd = (chdText.equals("Si")) ? true : false;
 
                     // Guardar datos en la BD
                     UserConfig NewUserConfig = new UserConfig(0,ageText,cholesterolText,bmiText,sexText,smoker,hypertension);
@@ -101,6 +98,7 @@ public class ConfigurationFragment extends Fragment {
         return root;
     }
 
+    //True si el editText esta vacio, false en caso contrario
     private boolean isEmpty(EditText etText) {
         return etText.getText().toString().trim().length() == 0;
     }

@@ -30,7 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PredictionFragment extends Fragment implements Callback<PredictResponse> {
+public class PredictionFragment extends Fragment implements Callback<PredictResponse>, heartRatePopUp.heartRateListener {
 
     private AppDatabase db;
     private TextView predictionTextView;    // Declarada aquí para que la actualice el onResponse tras la peticion
@@ -38,6 +38,7 @@ public class PredictionFragment extends Fragment implements Callback<PredictResp
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
+        //Muestra del fragment de predicciones
         View root = inflater.inflate(R.layout.fragment_prediction, container, false);
         final Button predictionButton = (Button)root.findViewById(R.id.prediction_button);
         predictionTextView = (TextView) root.findViewById(R.id.predictionText);
@@ -46,16 +47,23 @@ public class PredictionFragment extends Fragment implements Callback<PredictResp
         // Instanciar DB
         db = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "geocardioband").allowMainThreadQueries().build();
 
-        // TODO Mocked HeartRate
-        final Double heartRate = 70.0;
-
+       //boton que lanza el pop up para introducir el ritmo cardiaco
        predictionButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //Llamada al builder de peticion
-                makeRequest(context, heartRate);
+                heartRatePopUp popUpClass = new heartRatePopUp();
+                //necesitamos mandar el fragment al pop up para que este pueda retornar el ritmo cardiaco
+                popUpClass.showPopupWindow(v, PredictionFragment.this);
             }
         });
+
         return root;
+    }
+
+
+    //listener que recibe la informacion de ritmo cardiaco del pop up
+    public void sendHeartRate(String heartRate) {
+        //Llamada al builder de peticion
+        makeRequest(this.getContext(), Double.valueOf(heartRate));
     }
 
     /**
